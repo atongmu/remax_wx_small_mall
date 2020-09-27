@@ -47,7 +47,6 @@ export default () => {
   const [goodsInfo, setGoodsInfo] = useState<Items>({
     id: 0,
     banners: [
-      { type: 'video', url: 'https://1251542705.vod2.myqcloud.com/4a8d9c67vodtransgzp1251542705/f7b5199b5285890805797463637/v.f100820.mp4' },
       { type: 'image', url: '/image/mall/banner/11.jpg' },
       { type: 'image', url: '/image/mall/banner/33.jpg' },
       { type: 'image', url: '/image/mall/banner/55.jpg' },
@@ -120,17 +119,10 @@ export default () => {
     <View className="goods-info">
       <View style={{ position: 'relative' }}>
         <View>
-          <Swiper autoplay={false} circular={true} onChange={(e) => setBannerIndex(e.detail.current)} style={{ height: `${scrollH * 2}` }}>
+          <Swiper autoplay={true} circular={true} onChange={(e) => setBannerIndex(e.detail.current)} style={{ height: `${scrollH * 2}` }}>
             {goodsInfo.banners.map((item, index) => {
               return (<SwiperItem key={index}>
-                <div style={{ position: 'relative' }}>
-                  {item.type == 'image' ? (<Image src={item.url} style={{ width: "100%", height: "100%" }} />) : (
-                    <Video className="myVideo" loop showCenterPlayBtn showPlayBtn enablePlayGesture autoPauseIfOpenNative style={{ height: `${scrollH * 2}` }}
-                      src="https://1251542705.vod2.myqcloud.com/4a8d9c67vodtransgzp1251542705/f7b5199b5285890805797463637/v.f100820.mp4"
-                    // onError={videoErrorCallback}
-                    ></Video>
-                  )}
-                </div>
+                <Image src={item.url} style={{ width: "100%", height: "100%" }} />
               </SwiperItem>)
             })}
           </Swiper>
