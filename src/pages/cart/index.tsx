@@ -42,28 +42,13 @@ const customizeSkeleton = (
 );
 export default () => {
   const [isLoading, setLoading] = useState<boolean>(true)
-  const [show, setShow] = useState<boolean>(false)
-  const [isEdit, setIsEdit] = useState<boolean>(false)
   const [checkedAll, setCheckedAll] = useState<boolean>(true)
   const [items, setItems] = useState<Goods[]>([])
-  const [goodsInfo, setGoodsInfo] = useState<Goods>({
-    id: 0,
-    name: '',
-    newPrice: '',
-    content: '',
-    checked: false,
-    show: false,
-    swiper: false,
-    changeGoods: { key: '', value: '', image: '' },
-    sku: [],
-    num: 0
-  })
   const [total, setTotal] = useState<string>('0.00')
   usePageEvent('onShow', () => {
     init()
   });
   usePageEvent('onHide', () => {
-    setItems([])
     setLoading(true)
   });
   const init = () => {
@@ -168,11 +153,7 @@ export default () => {
           <View className="flex align-center padding-sm bg-gray light text-sm">
             <View className="flex-sub">购物车共<Text className="text-red padding-lr-xs">{items.length}</Text>件商品</View>
             <View className="flex-sub text-right padding-tb-sm">
-              {isEdit ? (
-                <Text className="padding-tb-sm padding-lr radius-shape bg-cyan text-white" onClick={() => setIsEdit(false)}>完成</Text>
-              ) : (
-                  <Text className="padding-tb-sm padding-lr radius-shape bg-blue text-white" onClick={() => setIsEdit(true)}>编辑</Text>
-                )}
+              <Text className="padding-tb-sm padding-lr radius-shape bg-red text-white" onClick={() => removeChangeGoods()}>删除</Text>
             </View>
           </View>
           <View>
@@ -221,19 +202,13 @@ export default () => {
               <View className="flex-sub">
                 <View className="flex-sub flex align-center">
                   <View><CheckboxModel checked={checkedAll} onChange={() => onCheckedAllChange(checkedAll)} extra={'全选'} /></View>
-                  {!isEdit && (
-                    <Text className="flex-sub text-right margin-right-sm">
-                      合计：<Text className="text-price text-bold text-red">{parseFloat(total).toFixed(2)}</Text>
-                    </Text>
-                  )}
+                  <Text className="flex-sub text-right margin-right-sm">
+                    合计：<Text className="text-price text-bold text-red">{parseFloat(total).toFixed(2)}</Text>
+                  </Text>
                 </View>
               </View>
               <View className="padding-tb-xs">
-                {isEdit ? (
-                  <Button look="anna" onTap={removeChangeGoods}>删除</Button>
-                ) : (
-                    <Button look="anna" onTap={() => href(page_path.order_submit)}>下单</Button>
-                  )}
+                <Button look="anna" onTap={() => href(page_path.order_submit)}>下单</Button>
               </View>
             </View>
           </View>
